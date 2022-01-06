@@ -6,13 +6,21 @@ public class Object: Equatable, Hashable, Identifiable {
     
     // MARK: - Property(ies).
 
-    public var id: UUID = .init()
+    public var id: UUID
     
     /// Should the object be hidden, saved with the Scene or modifiable by the user?
-    public var hideFlags: HideFlags = .none
+    public var hideFlags: HideFlags
     
     /// The name of the object.
-    public var name: String = ""
+    public var name: String
+
+    // MARK: - Constructor(s).
+
+    public init(id: UUID = .init(), hideFlags: HideFlags = .none, name: String = "") {
+        self.id = id
+        self.hideFlags = hideFlags
+        self.name = name
+    }
 
     // MARK: - Function(s).
 
