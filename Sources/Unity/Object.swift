@@ -25,6 +25,9 @@ public class Object: Equatable, Hashable, Identifiable {
     // MARK: - Static Function(s).
 
     public static func == (_ lhs: Object, _ rhs: Object) -> Bool {
-        lhs.id == rhs.id && lhs.hideFlags == rhs.hideFlags && lhs.name == rhs.name
+        lhs.id == rhs.id &&
+        lhs.hideFlags ==
+        rhs.hideFlags &&
+        lhs.name == rhs.name
     }
 }

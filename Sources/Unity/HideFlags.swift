@@ -1,7 +1,8 @@
 import Swift
 
 /// Bit mask that controls object destruction, saving and visibility in inspectors.
-@frozen public enum HideFlags : String, Equatable, Hashable {
+@frozen
+public enum HideFlags : String, Equatable, Hashable {
     /// A normal, visible object. This is the default.
     case none
     
