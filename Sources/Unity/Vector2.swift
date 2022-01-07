@@ -1,4 +1,5 @@
 import Swift
+import Math
 
 @frozen
 public struct Vector2 {
