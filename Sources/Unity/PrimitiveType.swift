@@ -1,7 +1,8 @@
 import Swift
 
 /// The various primitives that can be created using `GameObject.CreatePrimitive` function.
-@frozen public enum PrimitiveType : String, Equatable, Hashable {
+@frozen
+public enum PrimitiveType : String, Equatable, Hashable {
     
     /// A sphere primitive.
     case sphere
