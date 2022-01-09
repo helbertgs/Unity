@@ -10,7 +10,5 @@ final class GameObjectTests: XCTestCase {
         XCTAssertEqual(gameObject.isStatic, false)
         XCTAssertEqual(gameObject.layer, 0)
         XCTAssertEqual(gameObject.tag, "")
-
-        XCTAssertEqual(Math.sin(60), -0.3048106211)
     }
 }
