@@ -33,24 +33,29 @@ public struct Vector3 {
     // MARK: - Property(ies).
     
     /// X component of the vector.
-    public let x: Float
+    public let x: Double
     
     /// Y component of the vector.
-    public let y: Float
+    public let y: Double
     
     /// Z component of the vector.
-    public let z: Float
+    public let z: Double
     
     /// Returns the length of this vector (Read Only).
-    public var magnitude: Float { 0 }
+    public var magnitude: Double {
+        sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))
+    }
     
     /// Returns this vector with a magnitude of 1 (Read Only).
-    public var normalized: Float { 0 }
+    /// Other names: Unit Vector
+    public var normalized: Vector3 {
+        .init(x: x / magnitude, y: y / magnitude, z: z / magnitude)
+    }
     
     // MARK: - Constructor(s).
     
     /// Creates a new vector with given x, y, z components.
-    @inlinable public init(x: Float, y: Float, z: Float) {
+    @inlinable public init(x: Double, y: Double, z: Double) {
         self.x = x
         self.y = y
         self.z = z
@@ -63,16 +68,39 @@ public struct Vector3 {
     /// This means the smaller of the two possible angles between the two vectors is used. 
     /// The result is never greater than 180 degrees.
     /// - parameters:
-    ///    - from: The vector from which the angular difference is measured.
-    ///    - to: The vector to which the angular difference is measured.
+    ///    - a: The vector from which the angular difference is measured.
+    ///    - b: The vector to which the angular difference is measured.
     /// - returns: The angle in degrees between the two vectors.
-    @inlinable public static func angle(_ from: Vector3, _ to: Vector3) -> Float {
-        0
+    @inlinable public static func angle(_ a: Vector3, _ b: Vector3) -> Double {
+        cos(Vector3.dot(a, b) / (a.magnitude * b.magnitude))
     }
     
     /// Returns the distance between two vectors.
-    @inlinable public static func distance(_ a: Vector3, _ b: Vector3) -> Float {
-        0
+    @inlinable public static func distance(_ a: Vector3, _ b: Vector3) -> Double {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2) + pow(a.y - b.y, 2))
+    }
+
+    /// Dot Product of two vectors.
+    @inlinable public static func dot(_ a: Vector3, _ b: Vector3) -> Double {
+        (a.x * b.x) + (a.y * b.y) + (a.z * b.z)
+    }
+
+    @inlinable public static func scale(_ a: Vector3, _ b: Vector3) -> Vector3 {
+        .init(x: a.x * b.x, y: a.y * b.y, z: a.z * b.z)
+    }
+
+    @inlinable public static func cross(_ a: Vector3, _ b: Vector3) -> Vector3 {
+        guard Vector3.angle(a, b) == 0 || Vector3.angle(a, b) == 180 else { return .zero }
+        return .init(x: (a.y * b.z) - (a.z * b.y),
+                     y: (a.z * b.x) - (a.x * b.z),
+                     z: (a.x * b.y) - (a.y * b.x))
+    }
+
+    @inlinable public static func project(_ a: Vector3, _ b: Vector3) -> Vector3 {
+        let x = Vector3.dot(a, b) / b.magnitude
+        let y = b / b.magnitude
+
+        return y * x
     }
 }
 
@@ -90,12 +118,12 @@ extension Vector3: Equatable {
     }
     
     /// Multiplies a vector by a number.
-    @inlinable public static func * (_ lhs: Vector3, _ rhs: Float) -> Vector3 {
+    @inlinable public static func * (_ lhs: Vector3, _ rhs: Double) -> Vector3 {
         .init(x: lhs.x * rhs, y: lhs.y * rhs, z: lhs.z * rhs)
     }
     
     /// Divides a vector by a number.
-    @inlinable public static func / (_ lhs: Vector3, _ rhs: Float) -> Vector3 {
+    @inlinable public static func / (_ lhs: Vector3, _ rhs: Double) -> Vector3 {
         .init(x: lhs.x / rhs, y: lhs.y / rhs, z: lhs.z / rhs)
     }
     

@@ -27,21 +27,25 @@ public struct Vector2 {
     // MARK: - Property(ies).
     
     /// X component of the vector.
-    public let x: Float
+    public let x: Double
     
     /// Y component of the vector.
-    public let y: Float
+    public let y: Double
     
     /// Returns the length of this vector (Read Only).
-    public var magnitude: Float { 0 }
+    public var magnitude: Double {
+        sqrt(pow(x, 2) + pow(y, 2))
+    }
     
     /// Returns this vector with a magnitude of 1 (Read Only).
-    public var normalized: Float { 0 }
+    public var normalized: Vector2 {
+        .init(x: x / magnitude, y: y / magnitude)
+    }
     
     // MARK: - Constructor(s).
     
     /// Creates a new vector with given x, y components.
-    @inlinable public init(x: Float, y: Float) {
+    @inlinable public init(x: Double, y: Double) {
         self.x = x
         self.y = y
     }
@@ -56,13 +60,21 @@ public struct Vector2 {
     ///    - from: The vector from which the angular difference is measured.
     ///    - to: The vector to which the angular difference is measured.
     /// - returns: The angle in degrees between the two vectors.
-    @inlinable public static func angle(_ from: Vector2, _ to: Vector2) -> Float {
+    @inlinable public static func angle(_ from: Vector2, _ to: Vector2) -> Double {
         0
     }
     
     /// Returns the distance between two vectors.
-    @inlinable public static func distance(_ a: Vector2, _ b: Vector2) -> Float {
-        0
+    @inlinable public static func distance(_ a: Vector2, _ b: Vector2) -> Double {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+    }
+
+    @inlinable public static func dot(_ a: Vector2, _ b: Vector2) -> Double {
+        (a.x * b.x) + (a.y * b.y)
+    }
+
+    @inlinable public static func scale(_ a: Vector2, _ b: Vector2) -> Vector2 {
+        .init(x: a.x * b.x, y: a.y * b.y)
     }
 }
 
@@ -80,12 +92,12 @@ extension Vector2: Equatable {
     }
     
     /// Multiplies a vector by a number.
-    @inlinable public static func * (_ lhs: Vector2, _ rhs: Float) -> Vector2 {
+    @inlinable public static func * (_ lhs: Vector2, _ rhs: Double) -> Vector2 {
         .init(x: lhs.x * rhs, y: lhs.y * rhs)
     }
     
     /// Divides a vector by a number.
-    @inlinable public static func / (_ lhs: Vector2, _ rhs: Float) -> Vector2 {
+    @inlinable public static func / (_ lhs: Vector2, _ rhs: Double) -> Vector2 {
         .init(x: lhs.x / rhs, y: lhs.y / rhs)
     }
     
