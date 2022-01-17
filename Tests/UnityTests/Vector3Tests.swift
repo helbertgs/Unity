@@ -1,35 +1,54 @@
-//
-//  Vector3Tests.swift
-//  
-//
-//  Created by Helbert Gomes on 09/01/22.
-//
-
 import XCTest
+import Math
+@testable import Unity
 
 class Vector3Tests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testMagnitude() throws {
+        let v = Vector3(x: 3, y: 1, z: 2)
+        XCTAssertEqual(v.magnitude.rounded(3), 3.742)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testNormalized() throws {
+        let v = Vector3(x: 3, y: 1, z: 2)
+        XCTAssertEqual(v.normalized.x.rounded(3), 0.802)
+        XCTAssertEqual(v.normalized.y.rounded(3), 0.267)
+        XCTAssertEqual(v.normalized.z.rounded(3), 0.535)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testScale() throws {
+        let a = Vector3(x: 3, y: 1, z: 5)
+        let b = Vector3(x: 2, y: 7, z: 5)
+
+        let c = Vector3.scale(a, b)
+        XCTAssertEqual(c, Vector3(x: 6, y: 7, z: 25))
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testDot() throws {
+        let a = Vector3(x: 3, y: 1, z: 5)
+        let b = Vector3(x: 2, y: 7, z: 5)
+
+        XCTAssertEqual(Vector3.dot(a, b), 38)
     }
 
+    func testCross() throws {
+        let a = Vector3(x: 3, y: 1, z: 5)
+        let b = Vector3(x: 2, y: 7, z: 5)
+
+        XCTAssertEqual(Vector3.cross(a, b), .init(x: -30, y: -5, z: 19))
+    }
+
+    func testProject() throws {
+        let a = Vector3(x: 3, y: 1, z: 5)
+        let b = Vector3(x: 2, y: 7, z: 5)
+        let c = Vector3.project(a, b)
+
+        XCTAssertEqual(Vector3(x: c.x.rounded(2), y: c.y.rounded(2), z: c.z.rounded(2)), .init(x: 0.97, y: 3.41, z: 2.44))
+    }
+
+    func testAngle() throws {
+        let a = Vector3(x: 3, y: 1, z: 5)
+        let b = Vector3(x: 2, y: 7, z: 5)
+
+        XCTAssertEqual(Vector3.angle(a, b).rounded(5), 43.34106)
+    }
 }

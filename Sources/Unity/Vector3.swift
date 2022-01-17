@@ -1,5 +1,6 @@
-import Swift
 import Math
+import Swift
+import func Darwin.acos
 
 @frozen
 public struct Vector3 {
@@ -72,7 +73,7 @@ public struct Vector3 {
     ///    - b: The vector to which the angular difference is measured.
     /// - returns: The angle in degrees between the two vectors.
     @inlinable public static func angle(_ a: Vector3, _ b: Vector3) -> Double {
-        cos(Vector3.dot(a, b) / (a.magnitude * b.magnitude))
+        degree(rad: acos(Vector3.dot(a, b) / (a.magnitude * b.magnitude)))
     }
     
     /// Returns the distance between two vectors.
@@ -90,17 +91,11 @@ public struct Vector3 {
     }
 
     @inlinable public static func cross(_ a: Vector3, _ b: Vector3) -> Vector3 {
-        guard Vector3.angle(a, b) == 0 || Vector3.angle(a, b) == 180 else { return .zero }
-        return .init(x: (a.y * b.z) - (a.z * b.y),
-                     y: (a.z * b.x) - (a.x * b.z),
-                     z: (a.x * b.y) - (a.y * b.x))
+        .init(x: (a.y * b.z) - (a.z * b.y), y: (a.z * b.x) - (a.x * b.z), z: (a.x * b.y) - (a.y * b.x))
     }
 
     @inlinable public static func project(_ a: Vector3, _ b: Vector3) -> Vector3 {
-        let x = Vector3.dot(a, b) / b.magnitude
-        let y = b / b.magnitude
-
-        return y * x
+         b * (Vector3.dot(a, b) / pow(b.magnitude, 2))
     }
 }
 

@@ -1,5 +1,4 @@
 import XCTest
-import Math
 @testable import Unity
 
 final class GameObjectTests: XCTestCase {
